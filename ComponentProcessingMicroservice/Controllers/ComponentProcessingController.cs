@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PaymentAPI.Database.Entities;
+using ComponentProcessingMicroservice.Database.Entities;
 
 namespace ComponentProcessingMicroservice.Controllers
 {
@@ -19,16 +20,37 @@ namespace ComponentProcessingMicroservice.Controllers
             this._context = _context;
         }
 
-        [HttpGet]
-        public ProcessResponse ProcessDetail([FromBody]ProcessRequest processRequest )
+        [HttpPost]
+        public async Task<ActionResult<ProcessResponse>> ProcessDetails([FromBody]ProcessRequest processRequest)
         {
-            try
+            var processRespone = new ProcessResponse() ;
+
+            if (!ModelState.IsValid)
             {
-                return Ok();
+                return BadRequest("The Process request is having some trouble.");
             }
-            catch (Exception e)
+            else
             {
-                return BadRequest("Unable to fetch data.."+e.Message);
+                // to get the defective component ID we need to save defective component first to the database
+                _context.DefectiveComponents.Add(processRequest.DefectiveComponent);
+                await _context.SaveChangesAsync();
+
+                // set the defectivve component ID to the property of process request
+                var defectiveComponent = processRequest.DefectiveComponent;
+                processRequest.DefectiveComponentId = defectiveComponent.DefectiveComponentId;
+
+                // once we set the id then we can proceed to save the process request int he database
+                _context.ProcessRequests.Add(processRequest);
+                await _context.SaveChangesAsync();
+
+                // creating the object of process response
+                processRespone.ProcessRequestId = processRequest.ProcessRequestId;
+                processRespone.ProcessingCharge = (decimal)500.00;
+                processRespone.PackageAndDeliveryCharge = (decimal)200.00;
+                processRespone.DateOfDelivery = new DateTime(2021, 6, 20);
+
+                // return the process response
+                return processRespone;
             }
         }
     }
