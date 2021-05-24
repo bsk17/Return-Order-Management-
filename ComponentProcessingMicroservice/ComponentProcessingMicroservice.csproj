@@ -25,9 +25,5 @@
     <ProjectReference Include="..\PaymentAPI\PaymentAPI.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Database\xyz\" />
-  </ItemGroup>
-
 
 </Project>
