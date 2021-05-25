@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PaymentAPI.Database.Entities;
 using ComponentProcessingMicroservice.Database.Entities;
+using ComponentProcessingMicroservice.Services;
 
 namespace ComponentProcessingMicroservice.Controllers
 {
@@ -15,16 +16,18 @@ namespace ComponentProcessingMicroservice.Controllers
     public class ComponentProcessingController : ControllerBase
     {
         private readonly ComponentProcessingDbContext _context;
-        public ComponentProcessingController(ComponentProcessingDbContext _context)
+        private IProcessCharges _processCharges;
+        ProcessResponse processRespone = new ProcessResponse();
+
+        public ComponentProcessingController(ComponentProcessingDbContext _context, IProcessCharges _processCharges)
         {
             this._context = _context;
+            this._processCharges = _processCharges;
         }
 
-        [HttpPost]
+        [HttpPost("ProcessDetails")]
         public async Task<ActionResult<ProcessResponse>> ProcessDetails([FromBody]ProcessRequest processRequest)
         {
-            var processRespone = new ProcessResponse() ;
-
             if (!ModelState.IsValid)
             {
                 return BadRequest("The Process request is having some trouble.");
@@ -43,15 +46,57 @@ namespace ComponentProcessingMicroservice.Controllers
                 _context.ProcessRequests.Add(processRequest);
                 await _context.SaveChangesAsync();
 
-                // creating the object of process response
+                // Processing Charge for Integral item from RepairProcesscharge Class
+                if (processRequest.DefectiveComponent.ComponentType=="Integral")
+                {
+                    _processCharges = new RepairProcessCharges();
+                    
+                    if (processRequest.IsPriority == true)
+                    {
+                        processRespone.ProcessingCharge = (_processCharges.CalculateProcessCharge() + 200)*processRequest.DefectiveComponent.Quantity;
+                        processRespone.DateOfDelivery = DateTime.Today.AddDays(2);
+                    }
+                    else
+                    {
+                        processRespone.ProcessingCharge = _processCharges.CalculateProcessCharge() * processRequest.DefectiveComponent.Quantity;
+                        processRespone.DateOfDelivery = DateTime.Today.AddDays(5);
+                    }
+                }
+                // Processing Charge for Accessory item from ReplaceProcesscharge Class
+                else
+                {
+                    _processCharges = new ReplaceProcessCharges();
+                    processRespone.ProcessingCharge = _processCharges.CalculateProcessCharge() * processRequest.DefectiveComponent.Quantity;
+                    processRespone.DateOfDelivery = DateTime.Today.AddDays(5);
+                }
+
                 processRespone.ProcessRequestId = processRequest.ProcessRequestId;
-                processRespone.ProcessingCharge = (decimal)500.00;
                 processRespone.PackageAndDeliveryCharge = (decimal)200.00;
-                processRespone.DateOfDelivery = new DateTime(2021, 6, 20);
 
                 // return the process response
                 return processRespone;
             }
         }
+
+
+        // 3.1.1 CompletetProcessing POST method which will inturn call 3.1.3 PaymentProcess GET method
+
+        // this method will be called by MVC client using -                                                                                                PostAsync(api/ComponentProcessing/CompleteProcessing/{RequestId}/{CreditCardNumber}/{ProcessingCharge})
+
+        //[HttpPost("CompleteProcessing")]
+        //public async Task<ActionResult> CompleteProcessing(int RequestId,string CreditCardNumber, decimal ProcessingCharge)
+        //{
+        //    //validate creditcardnumber if null exception
+        //    var creditCard = (from c in _context.CreditCards
+        //                      where c.CreditCardNumber == CreditCardNumber
+        //                      select c).SingleOrDefault();
+
+        //    if (creditCard == null)
+        //    {
+        //        return BadRequest("Creddit Card details could not be found");
+        //    }
+            
+        //    return Ok("Your request has been processed Successfully. Thankyou for choosing Return Order Portal");
+        //}
     }
 }
