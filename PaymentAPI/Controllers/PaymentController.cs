@@ -29,6 +29,7 @@ namespace PaymentAPI.Controllers
                 //we have to perfrom encryption / decryption of cardnumber
 
                 decimal CurrentBalance = 0;
+
                 var creditCardDetails = (from c in _context.CreditCards
                                          where c.CreditCardNumber == CreditCardNumber
                                          select c).SingleOrDefault();

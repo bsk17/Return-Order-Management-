@@ -38,6 +38,8 @@ namespace ComponentProcessingMicroservice
 
             services.AddScoped<IProcessCharges,RepairProcessCharges>();
             services.AddScoped<IProcessCharges, ReplaceProcessCharges>();
+            services.AddScoped<IPackageAndDeliveryService, PackageAndDeliveryService>();
+            services.AddScoped<IPaymentService,PaymentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
