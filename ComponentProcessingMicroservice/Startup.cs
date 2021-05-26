@@ -1,4 +1,5 @@
 using ComponentProcessingMicroservice.Database;
+using ComponentProcessingMicroservice.Database.Entities;
 using ComponentProcessingMicroservice.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +41,9 @@ namespace ComponentProcessingMicroservice
             services.AddScoped<IProcessCharges, ReplaceProcessCharges>();
             services.AddScoped<IPackageAndDeliveryService, PackageAndDeliveryService>();
             services.AddScoped<IPaymentService,PaymentService>();
+
+            ProcessResponse processResponse = new ProcessResponse();
+            services.AddSingleton<ProcessResponse>(processResponse);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

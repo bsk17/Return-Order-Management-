@@ -19,14 +19,15 @@ namespace ComponentProcessingMicroservice.Controllers
         private IProcessCharges _processCharges;
         private readonly IPackageAndDeliveryService packageAndDeliveryService;
         private readonly IPaymentService paymentService;
-        ProcessResponse processRespone = new ProcessResponse();
+        ProcessResponse processResponse = null;
 
-        public ComponentProcessingController(ComponentProcessingDbContext _context, IProcessCharges _processCharges, IPackageAndDeliveryService packageAndDeliveryService, IPaymentService paymentService)
+        public ComponentProcessingController(ComponentProcessingDbContext _context, IProcessCharges _processCharges, IPackageAndDeliveryService packageAndDeliveryService, IPaymentService paymentService, ProcessResponse processResponse)
         {
             this._context = _context;
             this._processCharges = _processCharges;
             this.packageAndDeliveryService = packageAndDeliveryService;
             this.paymentService = paymentService;
+            this.processResponse = processResponse;
         }
 
         [HttpPost("ProcessDetails")]
@@ -59,24 +60,24 @@ namespace ComponentProcessingMicroservice.Controllers
 
                     if (processRequest.IsPriority == true)
                     {
-                        processRespone.ProcessingCharge = (_processCharges.CalculateProcessCharge() + 200) * processRequest.DefectiveComponent.Quantity;
-                        processRespone.DateOfDelivery = DateTime.Today.AddDays(2);
+                        processResponse.ProcessingCharge = (_processCharges.CalculateProcessCharge() + 200) * processRequest.DefectiveComponent.Quantity;
+                        processResponse.DateOfDelivery = DateTime.Today.AddDays(2);
                     }
                     else
                     {
-                        processRespone.ProcessingCharge = _processCharges.CalculateProcessCharge() * processRequest.DefectiveComponent.Quantity;
-                        processRespone.DateOfDelivery = DateTime.Today.AddDays(5);
+                        processResponse.ProcessingCharge = _processCharges.CalculateProcessCharge() * processRequest.DefectiveComponent.Quantity;
+                        processResponse.DateOfDelivery = DateTime.Today.AddDays(5);
                     }
                 }
                 // Processing Charge for Accessory item from ReplaceProcesscharge Class
                 else
                 {
                     _processCharges = new ReplaceProcessCharges();
-                    processRespone.ProcessingCharge = _processCharges.CalculateProcessCharge() * processRequest.DefectiveComponent.Quantity;
-                    processRespone.DateOfDelivery = DateTime.Today.AddDays(5);
+                    processResponse.ProcessingCharge = _processCharges.CalculateProcessCharge() * processRequest.DefectiveComponent.Quantity;
+                    processResponse.DateOfDelivery = DateTime.Today.AddDays(5);
                 }
 
-                processRespone.ProcessRequestId = processRequest.ProcessRequestId;
+                processResponse.ProcessRequestId = processRequest.ProcessRequestId;
 
                 // we are calling the Package and Delivery by passing the respective parameters
                 decimal packageAndDeliveryCharge = packageAndDeliveryService.GetPackagingAndDeliveryCharge(processRequest.DefectiveComponent.ComponentType, processRequest.DefectiveComponent.Quantity);
@@ -86,16 +87,12 @@ namespace ComponentProcessingMicroservice.Controllers
                 {
                     return BadRequest("Cannot get Package and Delivery Charge");
                 }
-                processRespone.PackageAndDeliveryCharge = packageAndDeliveryCharge;
-
-                _context.ProcessResponses.Add(processRespone);
-                await _context.SaveChangesAsync();
+                processResponse.PackageAndDeliveryCharge = packageAndDeliveryCharge;
 
                 // return the process response
-                return processRespone;
+                return processResponse;
             }
         }
-
         // 3.1.1 CompletetProcessing POST method which will inturn call 3.1.3 PaymentProcess GET method
 
         // this method will be called by MVC client using -                                                                                                PostAsync(api/ComponentProcessing/CompleteProcessing/{RequestId}/{CreditCardNumber}/{ProcessingCharge})
@@ -104,8 +101,8 @@ namespace ComponentProcessingMicroservice.Controllers
         public async Task<ActionResult> CompleteProcessing(int RequestId, string CreditCardNumber, decimal ProcessingCharge)
         {
 
-            
-            //validate creditcardnumber if null exception
+
+            //validate creditcardnumber if null then BadRequest
             var creditCard = (from c in _context.CreditCards
                               where c.CreditCardNumber == CreditCardNumber
                               select c).SingleOrDefault();
@@ -115,7 +112,16 @@ namespace ComponentProcessingMicroservice.Controllers
                 return BadRequest("Credit Card details could not be found");
             }
 
+            // to check if the payment was done
             bool paymentComplete = paymentService.ProcessPayment(creditCard.CreditCardNumber, creditCard.CreditCardLimit, ProcessingCharge);
+
+            // saving process response to DB after succesfull transaction
+            _context.ProcessResponses.Add(processResponse);
+            await _context.SaveChangesAsync();
+
+            // since we are using singleton for processResponse therefore once we add process response to DB
+            // we need to reset ProcessResponseId(PrimaryKey to) otherwise DB exception will be thrown
+            processResponse.ProcessResponsetId = 0;
 
             if (paymentComplete != true)
             {
