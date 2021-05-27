@@ -1,0 +1,44 @@
+﻿@model ReturnOrderPortal.Models.ProcessResponse
+
+@{
+    ViewData["Title"] = "CompleteProcess";
+}
+
+<h1>CompleteProcess</h1>
+
+<h3>Are you sure you want to pace this Order?</h3>
+<div>
+    <h4>ProcessResponse</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.ProcessingCharge)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.ProcessingCharge)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.PackageAndDeliveryCharge)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.PackageAndDeliveryCharge)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.DateOfDelivery)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.DateOfDelivery)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.ProcessRequestId)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.ProcessRequestId)
+        </dd>
+    </dl>
+    
+    <form asp-action="CompleteProcess">
+        <input type="submit" value="Confirm" class="btn btn-success" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
