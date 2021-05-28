@@ -13,13 +13,13 @@ namespace ReturnOrderPortal.Controllers
     public class ComponentProcessingController : Controller
     {
         private readonly HttpClient client = null;
-        private string componentProcessingApiUrl = "";
+        private string gatewayUrl = "";
         //private ProcessResponse processResponse= new ProcessResponse();
 
         public ComponentProcessingController(HttpClient client, IConfiguration config)
         {
             this.client = client;
-            componentProcessingApiUrl = config.GetValue<string>("AppSettings:ComponentProcessingApiUrl");
+            gatewayUrl = config.GetValue<string>("AppSettings:Gateway");
         }
 
         //public IActionResult Index()
@@ -41,7 +41,7 @@ namespace ReturnOrderPortal.Controllers
             {
                 string stringData = JsonSerializer.Serialize(processRequest);
                 var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync($"{componentProcessingApiUrl}/ProcessDetails", contentData);
+                HttpResponseMessage response = await client.PostAsync($"{gatewayUrl}/ProcessDetails", contentData);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -93,7 +93,7 @@ namespace ReturnOrderPortal.Controllers
                 var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
                 string creditCardNumber = TempData["CreditCardNumber"].ToString();
 
-                HttpResponseMessage response = await client.PostAsync($"{componentProcessingApiUrl}/CompleteProcessing/{processResponse.ProcessRequestId}/{creditCardNumber}/{processResponse.ProcessingCharge}", contentData);
+                HttpResponseMessage response = await client.PostAsync($"{gatewayUrl}/CompleteProcessing/{processResponse.ProcessRequestId}/{creditCardNumber}/{processResponse.ProcessingCharge}", contentData);
 
                 if (response.IsSuccessStatusCode)
                 {
