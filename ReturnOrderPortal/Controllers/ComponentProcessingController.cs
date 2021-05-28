@@ -57,11 +57,12 @@ namespace ReturnOrderPortal.Controllers
 
                     ProcessResponse processResponse = JsonSerializer.Deserialize<ProcessResponse>(stringDataResponse, options);
 
-                    //TempData["response"] = processResponse;
+                    TempData["processingCharge"] = processResponse.ProcessingCharge.ToString();
+                    TempData["packageDeliveryCharge"] = processResponse.PackageAndDeliveryCharge.ToString();
+                    TempData["DateOfDelivery"] = processResponse.DateOfDelivery.ToString();
+                    TempData["processRequestId"] = processResponse.ProcessRequestId.ToString();
 
-                    //return View("CompleteProcess",processResponse);
-                    return RedirectToAction("CompleteProcess", processResponse);
-                    //return CompleteProcess(processResponse);
+                    return RedirectToAction("CompleteProcess",processResponse);
                 }
                 else
                 {
@@ -72,10 +73,8 @@ namespace ReturnOrderPortal.Controllers
         }
 
       [HttpGet]
-      public IActionResult CompleteProcess()
+      public IActionResult CompleteProcess(ProcessResponse processResponse)
       {
-            var processResponse = (ProcessResponse)TempData["processResponse"];
-
             return View(processResponse);
       }
 
@@ -86,22 +85,27 @@ namespace ReturnOrderPortal.Controllers
         {
             if (ModelState.IsValid)
             {
-                //string stringData = JsonSerializer.Serialize(processResponse);
-                //var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
-                //string creditCardNumber = TempData["CreditCardNumber"].ToString();
+                processResponse.ProcessRequestId = Int32.Parse(TempData["processRequestId"].ToString());
+                processResponse.PackageAndDeliveryCharge = Decimal.Parse(TempData["packageDeliveryCharge"].ToString());
+                processResponse.ProcessingCharge = Decimal.Parse(TempData["processingCharge"].ToString());
+                processResponse.DateOfDelivery = DateTime.Parse(TempData["DateOfDelivery"].ToString());
 
-                //HttpResponseMessage response = await client.PostAsync($"{componentProcessingApiUrl}/CompleteProcessing/{processResponse.ProcessRequestId}/{creditCardNumber}/{processResponse.ProcessingCharge}", contentData);
+                string stringData = JsonSerializer.Serialize(processResponse);
+                var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
+                string creditCardNumber = TempData["CreditCardNumber"].ToString();
 
-                //if (response.IsSuccessStatusCode)
-                //{
-                //    return Content("KUDOS!! you have succesfully placed your order.");
-                //}
-                //else
-                //{
-                //    return Content("Sorry We couldn't complete your order at the moment!!");
-                //}
+                HttpResponseMessage response = await client.PostAsync($"{componentProcessingApiUrl}/CompleteProcessing/{processResponse.ProcessRequestId}/{creditCardNumber}/{processResponse.ProcessingCharge}", contentData);
 
-                return Content(processResponse.ProcessRequestId +" - "+processResponse.ProcessingCharge);
+                if (response.IsSuccessStatusCode)
+                {
+                    return Content("You have succesfully placed your order. Happy Shopping!!!");
+                }
+                else
+                {
+                    return Content("Sorry We couldn't complete your order at the moment!!");
+                }
+
+                //return Content(processResponse.ProcessRequestId +" - "+processResponse.ProcessingCharge);
             }
 
             return View();

@@ -97,7 +97,7 @@ namespace ComponentProcessingMicroservice.Controllers
 
         // this method will be called by MVC client using -                                                                                                PostAsync(api/ComponentProcessing/CompleteProcessing/{RequestId}/{CreditCardNumber}/{ProcessingCharge})
 
-        [HttpPost("CompleteProcessing")]
+        [HttpPost("CompleteProcessing/{RequestId}/{CreditCardNumber}/{ProcessingCharge}")]
         public async Task<ActionResult> CompleteProcessing(int RequestId, string CreditCardNumber, decimal ProcessingCharge)
         {
 
