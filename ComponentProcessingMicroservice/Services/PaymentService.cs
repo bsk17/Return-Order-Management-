@@ -22,7 +22,7 @@ namespace ComponentProcessingMicroservice.Services
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(configuration["BaseUrl:Payment"]);
+                    client.BaseAddress = new Uri(configuration["BaseUrl:Gateway"]);
                     HttpResponseMessage responseMessage = client.GetAsync($"api/Payment/{CreditCardNumber}/{CreditcardLimit}/{ProcessingCharge}").Result;
 
                     if (responseMessage.IsSuccessStatusCode)

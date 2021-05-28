@@ -11,8 +11,7 @@
       ],
       "UpstreamPathTemplate": "/api/ComponentProcessing/ProcessDetails",
       "UpstreamHttpMethod": [ "POST" ],
-      "Key": "RequestProcess"
-      
+      "Key": "Initiaterequest"
     },
     {
       "DownstreamPathTemplate": "/api/ComponentProcessing/CompleteProcessing/{RequestId}/{CreditCardNumber}/{ProcessingCharge}",
@@ -25,7 +24,33 @@
       ],
       "UpstreamPathTemplate": "/api/ComponentProcessing/CompleteProcessing/{RequestId}/{CreditCardNumber}/{ProcessingCharge}",
       "UpstreamHttpMethod": [ "POST" ],
-      "Key": "PaymentProcess"
+      "Key": "CompletePayment"
+    },
+    {
+      "DownstreamPathTemplate": "/api/PackagingAndDelivery/{ComponentType}/{Count}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "44308"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/PackagingAndDelivery/{ComponentType}/{Count}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "Key": "PackageAndDelivery"
+    },
+    {
+      "DownstreamPathTemplate": "/api/Payment/{CreditCardNumber}/{CreditcardLimit}/{ProcessingCharge}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "44359"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Payment/{CreditCardNumber}/{CreditcardLimit}/{ProcessingCharge}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "Key": "Payment"
     }
   ],
   "GlobalConfiguration": {

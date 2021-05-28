@@ -41,7 +41,6 @@ namespace ReturnOrderPortal.Controllers
             {
                 string stringData = JsonSerializer.Serialize(processRequest);
                 var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
-                
                 HttpResponseMessage response = await client.PostAsync($"{componentProcessingApiUrl}/ProcessDetails", contentData);
 
                 if (response.IsSuccessStatusCode)

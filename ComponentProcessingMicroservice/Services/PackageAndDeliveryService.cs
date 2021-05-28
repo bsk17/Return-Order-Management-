@@ -24,7 +24,7 @@ namespace ComponentProcessingMicroservice.Services
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(configuration["BaseUrl:PackagingAndDelivery"]);
+                    client.BaseAddress = new Uri(configuration["BaseUrl:Gateway"]);
                     HttpResponseMessage responseMessage 
                         = client.GetAsync($"api/PackagingAndDelivery/{ComponentType}/{Count}").Result;
 
