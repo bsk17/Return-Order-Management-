@@ -19,7 +19,7 @@ namespace ReturnOrderPortal.Controllers
         public ComponentProcessingController(HttpClient client, IConfiguration config)
         {
             this.client = client;
-            gatewayUrl = config.GetValue<string>("AppSettings:Gateway");
+            gatewayUrl = config.GetValue<string>("AppSettings:GatewayComponent");
         }
 
         //public IActionResult Index()

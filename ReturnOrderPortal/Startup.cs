@@ -30,16 +30,20 @@ namespace ReturnOrderPortal
 
             // adding client services for communicating with the API
             HttpClient client = new HttpClient();
-
             string baseUrl = Configuration.GetValue<string>("AppSettings:BaseUrl");
-
             client.BaseAddress = new Uri(baseUrl);
-
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
-
             client.DefaultRequestHeaders.Accept.Add(contentType);
-
             services.AddSingleton<HttpClient>(client);
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            services.AddHttpContextAccessor();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,11 +66,13 @@ namespace ReturnOrderPortal
 
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Authentication}/{action=Index}/{id?}");
             });
         }
     }
