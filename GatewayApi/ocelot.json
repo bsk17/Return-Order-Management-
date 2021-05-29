@@ -11,7 +11,11 @@
       ],
       "UpstreamPathTemplate": "/api/ComponentProcessing/ProcessDetails",
       "UpstreamHttpMethod": [ "POST" ],
-      "Key": "Initiaterequest"
+      "Key": "Initiaterequest",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/ComponentProcessing/CompleteProcessing/{RequestId}/{CreditCardNumber}/{ProcessingCharge}",
@@ -24,7 +28,11 @@
       ],
       "UpstreamPathTemplate": "/api/ComponentProcessing/CompleteProcessing/{RequestId}/{CreditCardNumber}/{ProcessingCharge}",
       "UpstreamHttpMethod": [ "POST" ],
-      "Key": "CompletePayment"
+      "Key": "CompletePayment",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/PackagingAndDelivery/{ComponentType}/{Count}",
@@ -51,6 +59,19 @@
       "UpstreamPathTemplate": "/api/Payment/{CreditCardNumber}/{CreditcardLimit}/{ProcessingCharge}",
       "UpstreamHttpMethod": [ "GET" ],
       "Key": "Payment"
+    },
+    {
+      "DownstreamPathTemplate": "/api/Authentication/Login",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "44350"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Authentication/Login",
+      "UpstreamHttpMethod": [ "POST" ],
+      "Key": "Authentication"
     }
   ],
   "GlobalConfiguration": {

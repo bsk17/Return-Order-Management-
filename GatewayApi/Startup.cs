@@ -1,10 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using System;
+using System.Text;
 
 namespace GatewayApi
 {
@@ -14,6 +18,34 @@ namespace GatewayApi
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var secret = "ThisIsMySecretKey";
+            var key = Encoding.ASCII.GetBytes(secret);
+            var signingKey = new SymmetricSecurityKey(key);
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+                ValidateIssuer = true,
+                ValidIssuer="bsk",
+                ValidateAudience = true,
+                ValidAudience="bsk",
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero,
+                RequireExpirationTime = true,
+            };
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+              .AddJwtBearer("TestKey",options =>
+              {
+                  options.RequireHttpsMetadata = false;
+                  options.SaveToken = true;
+                  options.TokenValidationParameters = tokenValidationParameters;
+              });
+
             services.AddOcelot();
         }
 
@@ -26,6 +58,8 @@ namespace GatewayApi
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
