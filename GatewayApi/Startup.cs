@@ -18,7 +18,9 @@ namespace GatewayApi
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var secret = "ThisIsMySecretKey";
+
+            // this key should be same to that of one being used while creating the token
+            var secret = "ThisismySecretKey";
             var key = Encoding.ASCII.GetBytes(secret);
             var signingKey = new SymmetricSecurityKey(key);
             var tokenValidationParameters = new TokenValidationParameters
@@ -60,6 +62,7 @@ namespace GatewayApi
             app.UseRouting();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
