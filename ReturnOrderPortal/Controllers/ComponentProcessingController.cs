@@ -30,6 +30,9 @@ namespace ReturnOrderPortal.Controllers
         [HttpGet]
         public IActionResult CreateProcessRequest()
         {
+
+            ViewBag.LoginMessage = TempData["LoginMessage"];
+            TempData.Keep();
             return View();
         }
 
@@ -74,6 +77,8 @@ namespace ReturnOrderPortal.Controllers
       [HttpGet]
       public IActionResult CompleteProcess(ProcessResponse processResponse)
       {
+            ViewBag.LoginMessage = TempData["LoginMessage"];
+            TempData.Keep();
             return View(processResponse);
       }
 
@@ -97,11 +102,11 @@ namespace ReturnOrderPortal.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return Content("You have succesfully placed your order. Happy Shopping!!!");
+                    return RedirectToAction("HomePage", "Authentication");
                 }
                 else
                 {
-                    return Content("Sorry We couldn't complete your order at the moment!!");
+                    return View("CustomError");
                 }
 
                 //return Content(processResponse.ProcessRequestId +" - "+processResponse.ProcessingCharge);
