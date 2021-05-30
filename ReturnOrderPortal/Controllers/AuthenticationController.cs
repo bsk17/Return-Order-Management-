@@ -55,8 +55,11 @@ namespace ReturnOrderPortal.Controllers
             {
                 UserResponse resobj = 
                     JsonConvert.DeserializeObject<UserResponse>(response.Content.ReadAsStringAsync().Result);
-                HttpContext.Session.SetString("Token", resobj.Token);//Set
+                //Set Token
+                HttpContext.Session.SetString("Token", resobj.Token);
+                //Get Token
                 string token = HttpContext.Session.GetString("Token");//Get Token
+                // Set authorisation header
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 if (resobj.Token != null)
@@ -90,11 +93,6 @@ namespace ReturnOrderPortal.Controllers
             if (obj != null)
             {
                 ViewBag.Id = HttpContext.Session.GetInt32("UserId");
-
-                TempData["LoginMessage"] = "Success";
-                TempData.Keep();
-                ViewBag.LoginMessage = "Success";
-
                 return View(SessionHelper.GetObject<UserRequest>(HttpContext.Session, "CurrentUser"));
                // return Content("You have logged in and your jwt token is - "+ HttpContext.Session.GetString("Token"));
             }

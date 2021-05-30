@@ -24,8 +24,8 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-
-                        @if (ViewBag.LoginMessage == "Success")
+                        @{ var x = Context.Session.GetObject<UserRequest>("CurrentUser");}
+                        @if (x!=null)
                         {
 
                             <li class="nav-item" style="margin-left:35em;">
@@ -35,14 +35,9 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>
                             </li>
 
-                            @*<li style="margin-left:35em;">@Html.ActionLink("Replace/Return", "CreateProcessRequest", "ComponentProcessing")</li>*@
-
-
-                            @*<li>@Html.ActionLink("Logout", "Logout", "Authentication")</li>*@
                         }
                         else
                         {
-                            @*<li style="margin-left:35em;">@Html.ActionLink("Login", "Index", "Authentication")</li>*@
                             <li class="nav-item" style="margin-left:35em;">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Index">Login</a>
                             </li>

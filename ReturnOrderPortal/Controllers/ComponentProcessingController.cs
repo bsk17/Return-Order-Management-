@@ -30,9 +30,6 @@ namespace ReturnOrderPortal.Controllers
         [HttpGet]
         public IActionResult CreateProcessRequest()
         {
-
-            ViewBag.LoginMessage = TempData["LoginMessage"];
-            TempData.Keep();
             return View();
         }
 
@@ -71,14 +68,12 @@ namespace ReturnOrderPortal.Controllers
                     ViewBag.Message = "Error while calling Web API";
                 }
             }
-            return View();
+            return View("UnAuthorized");
         }
 
       [HttpGet]
       public IActionResult CompleteProcess(ProcessResponse processResponse)
       {
-            ViewBag.LoginMessage = TempData["LoginMessage"];
-            TempData.Keep();
             return View(processResponse);
       }
 
