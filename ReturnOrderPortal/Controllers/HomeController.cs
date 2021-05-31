@@ -18,12 +18,12 @@ namespace ReturnOrderPortal.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult AboutUs()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult ContactUs()
         {
             return View();
         }

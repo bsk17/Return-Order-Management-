@@ -1,0 +1,45 @@
+﻿
+@*@{
+    ViewData["Title"] = "Checking";
+}
+
+<h1>Checking</h1>
+
+<form asp-action="CreateProcessRequest">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ContactNumber" class="control-label"></label>
+        <input asp-for="ContactNumber" class="form-control" />
+        <span asp-validation-for="ContactNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" asp-for="IsPriority" /> @Html.DisplayNameFor(model => model.IsPriority)
+        </label>
+    </div>
+    <div class="form-group">
+        <label asp-for="CreditCardNumber" class="control-label"></label>
+        <input asp-for="CreditCardNumber" class="form-control" />
+        <span asp-validation-for="CreditCardNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DefectiveComponent.ComponentType)
+        @Html.TextBoxFor(m => m.DefectiveComponent.ComponentType, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DefectiveComponent.ComponentName)
+        @Html.TextBoxFor(m => m.DefectiveComponent.ComponentName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DefectiveComponent.Quantity)
+        @Html.TextBoxFor(m => m.DefectiveComponent.Quantity, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>*@

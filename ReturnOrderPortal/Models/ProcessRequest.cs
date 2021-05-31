@@ -12,15 +12,20 @@ namespace ReturnOrderPortal.Models
         public int ProcessRequestId { get; set; }
 
         [Required]
+        
         public string Name { get; set; }
 
         [Required]
+        [Display(Name="Contact Number")]
         public string ContactNumber { get; set; }
-        public bool IsPriority { get; set; }
-
-
+        
         // details of credit card
+        [Required]
+        [StringLength(16,ErrorMessage ="Cresit Card Number should be of 16 digits")]
+        [Display(Name ="Credit Card Number")]
         public string CreditCardNumber { get; set; }
+
+        public bool IsPriority { get; set; }
 
         // details of defective component
         // DefectiveComponentId is foreign Key referring to primary key of DefectiveComponent

@@ -72,7 +72,7 @@ namespace ReturnOrderPortal
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Authentication}/{action=Index}/{id?}");
+                    pattern: "{controller=Authentication}/{action=HomePage}/{id?}");
             });
         }
     }

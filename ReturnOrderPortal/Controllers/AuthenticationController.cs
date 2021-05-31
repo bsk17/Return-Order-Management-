@@ -64,8 +64,10 @@ namespace ReturnOrderPortal.Controllers
 
                 if (resobj.Token != null)
                 {
+                    // setting neccesary parameters for session management
                     HttpContext.Session.SetInt32("UserId", resobj.Id);
                     HttpContext.Session.SetString("Message", resobj.Message);
+                    HttpContext.Session.SetString("Email", userRequest.Email);
                     SessionHelper.SetObject(HttpContext.Session, "CurrentUser", userRequest);
                     return RedirectToAction("HomePage", "Authentication");
                 }
@@ -94,10 +96,9 @@ namespace ReturnOrderPortal.Controllers
             {
                 ViewBag.Id = HttpContext.Session.GetInt32("UserId");
                 return View(SessionHelper.GetObject<UserRequest>(HttpContext.Session, "CurrentUser"));
-               // return Content("You have logged in and your jwt token is - "+ HttpContext.Session.GetString("Token"));
             }
             else
-                return View("Index");
+                return View();
 
         }
 
@@ -107,9 +108,6 @@ namespace ReturnOrderPortal.Controllers
             HttpContext.Session.Clear();
             HttpContext.SignOutAsync();
 
-            TempData["LoginMessage"] = "Fail";
-            TempData.Keep();
-            ViewBag.LoginMessage = "Fail";
             return RedirectToAction("Index");
         }
     }
