@@ -5,72 +5,146 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<head>
 
-<link rel="stylesheet" href="~/assets/css/fontawesome.css">
-<link rel="stylesheet" href="~/assets/css/templatemo-sixteen.css">
-<link rel="stylesheet" href="~/assets/css/owl.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-<h1>CreateProcessRequest</h1>
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-<h4>ProcessRequest</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateProcessRequest">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContactNumber" class="control-label"></label>
-                <input asp-for="ContactNumber" class="form-control" />
-                <span asp-validation-for="ContactNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsPriority" /> @Html.DisplayNameFor(model => model.IsPriority)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreditCardNumber" class="control-label"></label>
-                <input asp-for="CreditCardNumber" class="form-control" />
-                <span asp-validation-for="CreditCardNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.DefectiveComponent.ComponentType)
-                @Html.TextBoxFor(m => m.DefectiveComponent.ComponentType, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.DefectiveComponent.ComponentName)
-                @Html.TextBoxFor(m => m.DefectiveComponent.ComponentName, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.DefectiveComponent.Quantity)
-                @Html.TextBoxFor(m => m.DefectiveComponent.Quantity, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <link rel="stylesheet" href="~/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="~/assets/css/templatemo-sixteen.css">
+    <link rel="stylesheet" href="~/assets/css/owl.css">
+    <link rel="stylesheet" href="~/css/CreateRequest.css" >
+    
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
-</div>
+    <br />
+    <br />
+    <br />
+    <br />
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    <div class="container register">
+        <div class="row">
+            <div class="col-md-3 register-left">
 
-<!-- Bootstrap core JavaScript -->
-<script src="~/vendor/jquery/jquery.min.js"></script>
-<script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <h3>Welcome</h3>
+                <br />
+                <h2>You can place an order for repair or replacement based on the type of component.</h2>
+
+            </div>
+
+            <div class="col-md-9 register-right">
+                <form asp-action="CreateProcessRequest">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <h3 class="register-heading">Return Replacement</h3>
+                            <div class="row register-form">
+
+                                <div class="col-md-6">
+                                    
+                                    <div class="form-group">
+                                        <input asp-for="Name" class="form-control" placeholder="Enter Your Name" />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
 
 
-<!-- Additional Scripts -->
-<script src="~/assets/js/custom.js"></script>
-<script src="~/assets/js/owl.js"></script>
-<script src="~/assets/js/slick.js"></script>
-<script src="~/assets/js/isotope.js"></script>
-<script src="~/assets/js/accordions.js"></script>
+                                    <div class="form-group">
+
+                                        <input asp-for="ContactNumber" class="form-control" placeholder="Enter your contact" />
+                                        <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                                    </div>
+
+                                    <br />
+                                    <h4>Defective Component</h4>
+                                    <br />
+
+                                    <div>
+                                        <div class="form-group">
+
+                                            @Html.DropDownListFor(m => m.DefectiveComponent.ComponentType,
+                                                            new SelectList(new List<string> { "Integral", "Accessory" }),
+                                                            "Select Component Type", new
+                                                                 {
+                                                                @id = "type",
+                                                                required = "",
+                                                                onchange = "changePriority()"
+                                                            })
+                                            @Html.ValidationMessageFor(m => m.DefectiveComponent.ComponentType)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.DefectiveComponent.ComponentName)
+                                            @Html.TextBoxFor(m => m.DefectiveComponent.ComponentName, new { @class = "form-control" })
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.DefectiveComponent.Quantity)
+                                            @Html.TextBoxFor(m => m.DefectiveComponent.Quantity, new { @class = "form-control" })
+                                        </div>
+
+                                        <div class="form-group form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" asp-for="IsPriority" disabled="disabled" id="priority" /> @Html.DisplayNameFor(model => model.IsPriority)
+                                            </label>
+                                        </div>
+
+                                        <input type="submit" class="btnRegister" value="Submit" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <input asp-for="CreditCardNumber" class="form-control" placeholder="Credit Card Number" />
+                                        <span asp-validation-for="CreditCardNumber" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Additional Scripts -->
+    <script src="~/assets/js/custom.js"></script>
+    <script src="~/assets/js/owl.js"></script>
+    <script src="~/assets/js/slick.js"></script>
+    <script src="~/assets/js/isotope.js"></script>
+    <script src="~/assets/js/accordions.js"></script>
+    <script type="text/javascript">
+
+        function changePriority() {
+            var e = document.getElementById("type");
+            var strUser = e.options[e.selectedIndex].text;
+            if (strUser == "Integral")
+                var g = document.getElementById("priority").disabled
+                    = false;
+            else
+                var g = document.getElementById("priority").disabled
+                    = true;
+        }
+    </script>
+</body>
 
