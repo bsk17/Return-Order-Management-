@@ -97,7 +97,8 @@ namespace ReturnOrderPortal.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("HomePage", "Authentication");
+                    //return RedirectToAction("HomePage", "Authentication");
+                    return View("Congratulations");
                 }
                 else
                 {

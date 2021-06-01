@@ -5,41 +5,71 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>CompleteProcess</h1>
+<head>
 
-<h3>Are you sure you want to pace this Order?</h3>
-<div>
-    <h4>ProcessResponse</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-4">
-            @Html.DisplayNameFor(model => model.ProcessingCharge)
-        </dt>
-        <dd class = "col-sm-8">
-            @Html.DisplayFor(model => model.ProcessingCharge)
-        </dd>
-        <dt class = "col-sm-4">
-            @Html.DisplayNameFor(model => model.PackageAndDeliveryCharge)
-        </dt>
-        <dd class = "col-sm-8">
-            @Html.DisplayFor(model => model.PackageAndDeliveryCharge)
-        </dd>
-        <dt class = "col-sm-4">
-            @Html.DisplayNameFor(model => model.DateOfDelivery)
-        </dt>
-        <dd class = "col-sm-8">
-            @Html.DisplayFor(model => model.DateOfDelivery)
-        </dd>
-        <dt class = "col-sm-4">
-            @Html.DisplayNameFor(model => model.ProcessRequestId)
-        </dt>
-        <dd class = "col-sm-8">
-            @Html.DisplayFor(model => model.ProcessRequestId)
-        </dd>
-    </dl>
-    
-    <form asp-action="CompleteProcess">
-        <input type="submit" value="Confirm" class="btn btn-success" /> |
-        <a asp-action="HomePage" asp-controller="Authentication">Cancel</a>
-    </form>
-</div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="~/assets/css/templatemo-sixteen.css">
+    <link rel="stylesheet" href="~/assets/css/owl.css">
+    <link rel="stylesheet" href="~/css/CompleteProcess.css">
+
+</head>
+<body>
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="container">
+        <div class="row forms-container">
+            <div class="col-md-4 mt-5">
+                <div class="formbackground">
+                    <div class="skew-up-background"></div>
+                        <div class="form-group mt-4">
+                            <label class="white-text" for="PRI">Request Id</label>
+                            <input type="text" class="form-control" value="@Html.DisplayFor(model => model.ProcessRequestId)" disabled>
+                            @*@Html.DisplayNameFor(model => model.ProcessRequestId)
+                            @Html.DisplayFor(model => model.ProcessRequestId)*@
+                        </div>
+                        <div class="form-group mt-4">
+                            <label class="white-text" for="PC">Processing Charge</label>
+                            <input type="text" class="form-control" value=" @Html.DisplayFor(model => model.ProcessingCharge)" disabled>
+                            @*@Html.DisplayNameFor(model => model.ProcessingCharge)
+                            @Html.DisplayFor(model => model.ProcessingCharge)*@
+                        </div>
+                        <div class="form-group mt-4">
+                            <label class="white-text" for="PDC" style="color:black">Package Delivery Charge</label>
+                            <input type="text" class="form-control" value=" @Html.DisplayFor(model => model.PackageAndDeliveryCharge)" disabled>
+                            @*@Html.DisplayNameFor(model => model.PackageAndDeliveryCharge)
+                            @Html.DisplayFor(model => model.PackageAndDeliveryCharge)*@
+                        </div>
+                        <div class="form-group mt-4">
+                            <label class="white-text" for="DOD" style="color:black">Date Of Delivery</label>
+                            <input type="text" class="form-control" value="@Html.DisplayFor(model => model.DateOfDelivery)" disabled>
+                            @*@Html.DisplayNameFor(model => model.DateOfDelivery)
+                            @Html.DisplayFor(model => model.DateOfDelivery)*@
+                        </div>
+                        <div class="text-center mt-5">
+                            @*<button type="submit" class="btn formsubmitbtn">Submit</button>
+        <button type="submit" class="btn formsubmitbtn">Cancel</button>*@
+                            <form asp-action="CompleteProcess">
+                                <input type="submit" value="Confirm" class="btn btn-success" /> |
+                                <a asp-action="HomePage" asp-controller="Authentication">Cancel</a>
+                            </form>
+                        </div>
+                </div>
+            </div>
+            <hr />
+
+        </div>
+    </div>
+
+</body>

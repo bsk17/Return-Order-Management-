@@ -1,0 +1,185 @@
+﻿.rectangle:first-child {
+    grid-column: -20/span 4;
+    grid-row: -5;
+    background-color: #555abf;
+}
+
+.rectangle:nth-child(2) {
+    grid-column: viewport-start/span 4;
+    grid-row: -4;
+    background-color: #c4f0ff;
+}
+
+.rectangle:nth-child(3) {
+    grid-column: 5/span 3;
+    grid-row: -4;
+    background-color: #7795f8;
+}
+
+.rectangle:nth-child(4) {
+    grid-column: 17/span 4;
+    grid-row: -4;
+    background-color: #7795f8;
+}
+
+
+.rectangle:nth-child(5) {
+    grid-column: -5/viewport-end;
+    grid-row: -4;
+    background-color: #555abf;
+    position: relative;
+}
+
+.rectangle:nth-child(6) {
+    grid-column: -8/span 4;
+    grid-row: -3;
+    background-color: #2bbbee;
+}
+
+
+
+
+
+
+
+
+
+
+.outercontainer {
+    position: relative;
+    z-index: 1;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.outercontainer2 {
+    padding: 30px 60px;
+    border-bottom: 2px solid rgba(207,215,223,.25);
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    -webkit-box-shadow: 0 30px 60px -12px rgba(50,50,93,.25),0 18px 36px -18px rgba(0,0,0,.3);
+    box-shadow: 0 30px 60px -12px rgba(50,50,93,.25),0 18px 36px -18px rgba(0,0,0,.3);
+    box-sizing: border-box;
+}
+
+.outercontainer3 {
+    text-align: center;
+}
+
+.realoutercontainer {
+    padding: 90px 0;
+    position: relative;
+}
+
+
+.outercontainer4 h1 {
+    font-size: 36px;
+    margin-bottom: 25px;
+    color: #32325d;
+}
+
+.outercontainer4 p {
+    font-size: 18px;
+    color: #525f7f;
+}
+
+.outercontainer4 {
+    width: 50%;
+    margin: 10px auto;
+}
+
+
+/* General code starts */
+.common-rectangleGrid {
+    --rectangle-height: 48px;
+    --content-columns: 12;
+    --gutter-columns: 4;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+    pointer-events: none
+}
+
+    .common-rectangleGrid .backgroundContainer, .common-rectangleGrid .rectangleContainer {
+        width: 100%;
+        height: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        position: absolute;
+        -webkit-transform: skewY(-12deg);
+        transform: skewY(-12deg);
+    }
+
+        .common-rectangleGrid .backgroundContainer .grid {
+            grid-template-columns: 1fr;
+            min-width: 0
+        }
+
+        .common-rectangleGrid .backgroundContainer .background {
+            grid-row: 1/-1;
+            grid-column: 1/-1;
+            z-index: -1
+        }
+
+    .common-rectangleGrid .rectangleContainer {
+        overflow: hidden
+    }
+
+    .common-rectangleGrid.original .backgroundContainer, .common-rectangleGrid.original .rectangleContainer {
+        justify-content: flex-end;
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
+    }
+
+    .common-rectangleGrid.original .grid {
+        height: 200%;
+        -ms-flex-line-pack: end;
+        align-content: end;
+    }
+
+    .common-rectangleGrid .grid {
+        --content-column-width: minmax(0,calc(1040px / var(--content-columns)));
+        --gutter-column-width: 1fr;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-rows: repeat(auto-fill,var(--rectangle-height));
+        grid-template-columns: [viewport-start] 1fr [left-gutter-start] repeat(var(--gutter-columns),var(--gutter-column-width)) [left-gutter-end content-start] repeat(var(--content-columns),var(--content-column-width)) [content-end right-gutter-start] repeat(var(--gutter-columns),var(--gutter-column-width)) [right-gutter-end] 1fr [viewport-end];
+    }
+
+@media (min-width:1040px) {
+    .common-rectangleGrid .grid {
+        --gutter-column-width: var(--content-column-width);
+        min-width: calc(1040px / var(--content-columns) * (var(--gutter-columns) * 2 + var(--content-columns)))
+    }
+}
+
+@media (min-width:670px) {
+    .common-rectangleGrid {
+        --rectangle-height: 64px;
+    }
+}
+
+
+@media only screen and (max-width: 670px) {
+    .outercontainer4 {
+        width: 90%;
+    }
+}
+
