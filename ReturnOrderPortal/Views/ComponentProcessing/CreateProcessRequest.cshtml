@@ -56,14 +56,13 @@
                                 <div class="col-md-6">
                                     
                                     <div class="form-group">
-                                        <input asp-for="Name" class="form-control" placeholder="Enter Your Name" />
+                                        <input asp-for="Name" class="form-control" placeholder="Enter Your Name" required/>
                                         <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
 
 
                                     <div class="form-group">
-
-                                        <input asp-for="ContactNumber" class="form-control" placeholder="Enter your contact" />
+                                        <input asp-for="ContactNumber" class="form-control" placeholder="Enter your contact" pattern="[1-9]{1}[0-9]{9}" title="Incorrect Number Format" required/>
                                         <span asp-validation-for="ContactNumber" class="text-danger"></span>
                                     </div>
 
@@ -86,13 +85,13 @@
                                         </div>
 
                                         <div class="form-group">
-                                            @Html.LabelFor(m => m.DefectiveComponent.ComponentName)
-                                            @Html.TextBoxFor(m => m.DefectiveComponent.ComponentName, new { @class = "form-control" })
+                                            @Html.TextBoxFor(m => m.DefectiveComponent.ComponentName, new { @class = "form-control", placeholder="Enter Component Name", required="required"})
+                                            @Html.ValidationMessageFor(m => m.DefectiveComponent.ComponentName)
                                         </div>
 
                                         <div class="form-group">
-                                            @Html.LabelFor(m => m.DefectiveComponent.Quantity)
-                                            @Html.TextBoxFor(m => m.DefectiveComponent.Quantity, new { @class = "form-control" })
+                                            @Html.TextBoxFor(m => m.DefectiveComponent.Quantity, new { @class = "form-control",placeholder="Enter Quantity",required="required" ,@type="number"})
+                                            @Html.ValidationMessageFor(m => m.DefectiveComponent.Quantity)
                                         </div>
 
                                         <div class="form-group form-check">
@@ -107,7 +106,7 @@
                                 <div class="col-md-6">
 
                                     <div class="form-group">
-                                        <input asp-for="CreditCardNumber" class="form-control" placeholder="Credit Card Number" />
+                                        <input asp-for="CreditCardNumber" class="form-control" placeholder="Credit Card Number" required title="16 Digit number" pattern="[0-9]{16}"/>
                                         <span asp-validation-for="CreditCardNumber" class="text-danger"></span>
                                     </div>
 

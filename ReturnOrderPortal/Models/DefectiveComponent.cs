@@ -13,10 +13,10 @@ namespace ReturnOrderPortal.Models
         [Required]
         public string ComponentType { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Enter The Component Name")]
         public string ComponentName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Enter the Component Type")]
         public int Quantity { get; set; }
     }
 }

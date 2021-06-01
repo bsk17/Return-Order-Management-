@@ -99,7 +99,6 @@ namespace ReturnOrderPortal.Controllers
             }
             else
                 return View();
-
         }
 
         public IActionResult Logout()

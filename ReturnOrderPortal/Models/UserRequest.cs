@@ -9,9 +9,11 @@ namespace ReturnOrderPortal.Models
     public class UserRequest
     {
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage ="Please enter valid email!")]
         public string Email { get; set; }
         [Required]
+        [MinLength(8), MaxLength(16)]
+
         public string Password { get; set; }
     }
 }

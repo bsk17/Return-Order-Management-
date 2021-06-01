@@ -21,7 +21,7 @@ namespace ReturnOrderPortal.Models
         
         // details of credit card
         [Required]
-        [StringLength(16,ErrorMessage ="Cresit Card Number should be of 16 digits")]
+        [StringLength(16,ErrorMessage ="Credit Card Number should be of 16 digits")]
         [Display(Name ="Credit Card Number")]
         public string CreditCardNumber { get; set; }
 

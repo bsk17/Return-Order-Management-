@@ -33,43 +33,54 @@
             <div class="col-md-4 mt-5">
                 <div class="formbackground">
                     <div class="skew-up-background"></div>
-                        <div class="form-group mt-4">
-                            <label class="white-text" for="PRI">Request Id</label>
-                            <input type="text" class="form-control" value="@Html.DisplayFor(model => model.ProcessRequestId)" disabled>
-                            @*@Html.DisplayNameFor(model => model.ProcessRequestId)
+                    <div class="form-group mt-4">
+                        <label class="white-text" for="PRI">Request Id</label>
+                        <input type="text" class="form-control" value="@Html.DisplayFor(model => model.ProcessRequestId)" disabled>
+                        @*@Html.DisplayNameFor(model => model.ProcessRequestId)
                             @Html.DisplayFor(model => model.ProcessRequestId)*@
-                        </div>
-                        <div class="form-group mt-4">
-                            <label class="white-text" for="PC">Processing Charge</label>
-                            <input type="text" class="form-control" value=" @Html.DisplayFor(model => model.ProcessingCharge)" disabled>
-                            @*@Html.DisplayNameFor(model => model.ProcessingCharge)
+                    </div>
+                    <div class="form-group mt-4">
+                        <label class="white-text" for="PC">Processing Charge</label>
+                        <input type="text" class="form-control" value=" @Html.DisplayFor(model => model.ProcessingCharge)" disabled>
+                        @*@Html.DisplayNameFor(model => model.ProcessingCharge)
                             @Html.DisplayFor(model => model.ProcessingCharge)*@
-                        </div>
-                        <div class="form-group mt-4">
-                            <label class="white-text" for="PDC" style="color:black">Package Delivery Charge</label>
-                            <input type="text" class="form-control" value=" @Html.DisplayFor(model => model.PackageAndDeliveryCharge)" disabled>
-                            @*@Html.DisplayNameFor(model => model.PackageAndDeliveryCharge)
+                    </div>
+                    <div class="form-group mt-4">
+                        <label class="white-text" for="PDC" style="color:black">Package Delivery Charge</label>
+                        <input type="text" class="form-control" value=" @Html.DisplayFor(model => model.PackageAndDeliveryCharge)" disabled>
+                        @*@Html.DisplayNameFor(model => model.PackageAndDeliveryCharge)
                             @Html.DisplayFor(model => model.PackageAndDeliveryCharge)*@
-                        </div>
-                        <div class="form-group mt-4">
-                            <label class="white-text" for="DOD" style="color:black">Date Of Delivery</label>
-                            <input type="text" class="form-control" value="@Html.DisplayFor(model => model.DateOfDelivery)" disabled>
-                            @*@Html.DisplayNameFor(model => model.DateOfDelivery)
+                    </div>
+                    <div class="form-group mt-4">
+                        <label class="white-text" for="DOD" style="color:black">Date Of Delivery</label>
+                        <input type="text" class="form-control" value="@Html.DisplayFor(model => model.DateOfDelivery)" disabled>
+                        @*@Html.DisplayNameFor(model => model.DateOfDelivery)
                             @Html.DisplayFor(model => model.DateOfDelivery)*@
-                        </div>
-                        <div class="text-center mt-5">
-                            @*<button type="submit" class="btn formsubmitbtn">Submit</button>
-        <button type="submit" class="btn formsubmitbtn">Cancel</button>*@
-                            <form asp-action="CompleteProcess">
-                                <input type="submit" value="Confirm" class="btn btn-success" /> |
-                                <a asp-action="HomePage" asp-controller="Authentication">Cancel</a>
-                            </form>
-                        </div>
+                    </div>
+                    <div class="text-center mt-5">
+                        @*<button type="submit" class="btn formsubmitbtn">Submit</button>
+                            <button type="submit" class="btn formsubmitbtn">Cancel</button>*@
+                        <form asp-action="CompleteProcess">
+                            <input type="submit" value="Confirm" class="btn btn-success" /> |
+                            <a asp-action="HomePage" asp-controller="Authentication">Cancel</a>
+                        </form>
+                    </div>
                 </div>
             </div>
             <hr />
 
         </div>
     </div>
+
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Additional Scripts -->
+    <script src="~/assets/js/custom.js"></script>
+    <script src="~/assets/js/owl.js"></script>
+    <script src="~/assets/js/slick.js"></script>
+    <script src="~/assets/js/isotope.js"></script>
+
 
 </body>
