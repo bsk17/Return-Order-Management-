@@ -5,8 +5,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "44312"
+          "Host": "componentprocessingapi.azurewebsites.net",
+          "Port": "443"
         }
       ],
       "UpstreamPathTemplate": "/api/ComponentProcessing/ProcessDetails",
@@ -22,8 +22,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "44312"
+          "Host": "componentprocessingapi.azurewebsites.net",
+          "Port": "443"
         }
       ],
       "UpstreamPathTemplate": "/api/ComponentProcessing/CompleteProcessing/{RequestId}/{CreditCardNumber}/{ProcessingCharge}",
@@ -39,8 +39,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "44308"
+          "Host": "packaginganddeliveryapi.azurewebsites.net",
+          "Port": "443"
         }
       ],
       "UpstreamPathTemplate": "/api/PackagingAndDelivery/{ComponentType}/{Count}",
@@ -52,8 +52,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "44359"
+          "Host": "paymentprocessapi.azurewebsites.net",
+          "Port": "443"
         }
       ],
       "UpstreamPathTemplate": "/api/Payment/{CreditCardNumber}/{CreditcardLimit}/{ProcessingCharge}",
@@ -65,8 +65,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "44350"
+          "Host": "authenticationprocessapi.azurewebsites.net",
+          "Port": "443"
         }
       ],
       "UpstreamPathTemplate": "/api/Authentication/Login",
@@ -75,6 +75,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:44362/"
+    "BaseUrl": "https://returnmegatewayapi.azurewebsites.net"
   }
 }
