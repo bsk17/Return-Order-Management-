@@ -39,36 +39,60 @@ namespace ReturnOrderPortal.Controllers
         {
             if (ModelState.IsValid)
             {
-                string stringData = JsonSerializer.Serialize(processRequest);
-                var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync($"{gatewayUrl}/ProcessDetails", contentData);
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    ViewBag.Message = "Process Requested successfully";
-                    TempData["CreditCardNumber"] = processRequest.CreditCardNumber;
-                    
-                    string stringDataResponse = await response.Content.ReadAsStringAsync();
-                    var options = new JsonSerializerOptions
+                    string stringData = JsonSerializer.Serialize(processRequest);
+                    var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await client.PostAsync($"{gatewayUrl}/ProcessDetails", contentData);
+
+                    if (response.IsSuccessStatusCode)
                     {
-                        PropertyNameCaseInsensitive = true
-                    };
+                        ViewBag.Message = "Process Requested successfully";
+                        TempData["CreditCardNumber"] = processRequest.CreditCardNumber;
 
-                    ProcessResponse processResponse = JsonSerializer.Deserialize<ProcessResponse>(stringDataResponse, options);
+                        string stringDataResponse = await response.Content.ReadAsStringAsync();
+                        var options = new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        };
 
-                    TempData["processingCharge"] = processResponse.ProcessingCharge.ToString();
-                    TempData["packageDeliveryCharge"] = processResponse.PackageAndDeliveryCharge.ToString();
-                    TempData["DateOfDelivery"] = processResponse.DateOfDelivery.ToString();
-                    TempData["processRequestId"] = processResponse.ProcessRequestId.ToString();
+                        ProcessResponse processResponse = JsonSerializer.Deserialize<ProcessResponse>(stringDataResponse, options);
 
-                    return RedirectToAction("CompleteProcess",processResponse);
+                        TempData["processingCharge"] = processResponse.ProcessingCharge.ToString();
+                        TempData["packageDeliveryCharge"] = processResponse.PackageAndDeliveryCharge.ToString();
+                        TempData["DateOfDelivery"] = processResponse.DateOfDelivery.ToString();
+                        TempData["processRequestId"] = processResponse.ProcessRequestId.ToString();
+
+                        return RedirectToAction("CompleteProcess", processResponse);
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    {
+                        ViewBag.Message = "400 Credit Card Details Were Wrong";
+                        return View("CustomError");
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        ViewBag.Message = "No Account found for this Account ID";
+                        return View("CustomError");
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                    {
+                        ViewBag.Message = "500 Internal Server Error";
+                        return View("CustomError");
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Server Under Maintenance";
+                        return View("CustomError");
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    ViewBag.Message = "Error while calling Web API";
+                    ViewBag.Message = e.Message;
+                    return View("CustomError");
                 }
             }
-            return View("UnAuthorized");
+            return View("SessionExpired");
         }
 
       [HttpGet]
@@ -84,31 +108,52 @@ namespace ReturnOrderPortal.Controllers
         {
             if (ModelState.IsValid)
             {
-                processResponse.ProcessRequestId = Int32.Parse(TempData["processRequestId"].ToString());
-                processResponse.PackageAndDeliveryCharge = Decimal.Parse(TempData["packageDeliveryCharge"].ToString());
-                processResponse.ProcessingCharge = Decimal.Parse(TempData["processingCharge"].ToString());
-                processResponse.DateOfDelivery = DateTime.Parse(TempData["DateOfDelivery"].ToString());
-
-                string stringData = JsonSerializer.Serialize(processResponse);
-                var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
-                string creditCardNumber = TempData["CreditCardNumber"].ToString();
-
-                HttpResponseMessage response = await client.PostAsync($"{gatewayUrl}/CompleteProcessing/{processResponse.ProcessRequestId}/{creditCardNumber}/{processResponse.ProcessingCharge}", contentData);
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    //return RedirectToAction("HomePage", "Authentication");
-                    return View("Congratulations");
+                    processResponse.ProcessRequestId = Int32.Parse(TempData["processRequestId"].ToString());
+                    processResponse.PackageAndDeliveryCharge = Decimal.Parse(TempData["packageDeliveryCharge"].ToString());
+                    processResponse.ProcessingCharge = Decimal.Parse(TempData["processingCharge"].ToString());
+                    processResponse.DateOfDelivery = DateTime.Parse(TempData["DateOfDelivery"].ToString());
+
+                    string stringData = JsonSerializer.Serialize(processResponse);
+                    var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
+                    string creditCardNumber = TempData["CreditCardNumber"].ToString();
+
+                    HttpResponseMessage response = await client.PostAsync($"{gatewayUrl}/CompleteProcessing/{processResponse.ProcessRequestId}/{creditCardNumber}/{processResponse.ProcessingCharge}", contentData);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return View("Congratulations");
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    {
+                        ViewBag.Message = "400 Bad Request Error";
+                        return View("CustomError");
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        ViewBag.Message = "No Account found for this Account ID";
+                        return View("CustomError");
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                    {
+                        ViewBag.Message = "500 Internal Server Error";
+                        return View("CustomError");
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Server Under Maintenance";
+                        return View("CustomError");
+                    }
                 }
-                else
+                catch (Exception e)
                 {
+                    ViewBag.Message = e.Message;
                     return View("CustomError");
                 }
-
-                //return Content(processResponse.ProcessRequestId +" - "+processResponse.ProcessingCharge);
             }
 
-            return View();
+            return View("SessionExpired");
         }
     }
 }

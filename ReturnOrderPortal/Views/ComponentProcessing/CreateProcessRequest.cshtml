@@ -62,7 +62,7 @@
 
 
                                     <div class="form-group">
-                                        <input asp-for="ContactNumber" class="form-control" placeholder="Enter your contact" pattern="[1-9]{1}[0-9]{9}" title="Incorrect Number Format" required/>
+                                        <input asp-for="ContactNumber" class="form-control" placeholder="Enter your contact" pattern="[1-9]{1}[0-9]{9}" title="10 digit number" required/>
                                         <span asp-validation-for="ContactNumber" class="text-danger"></span>
                                     </div>
 
@@ -90,7 +90,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            @Html.TextBoxFor(m => m.DefectiveComponent.Quantity, new { @class = "form-control",placeholder="Enter Quantity",required="required" ,@type="number"})
+                                            @Html.TextBoxFor(m => m.DefectiveComponent.Quantity, new { @class = "form-control",placeholder="Enter Quantity",required="required" ,@type="number",min="1"})
                                             @Html.ValidationMessageFor(m => m.DefectiveComponent.Quantity)
                                         </div>
 
@@ -106,8 +106,14 @@
                                 <div class="col-md-6">
 
                                     <div class="form-group">
-                                        <input asp-for="CreditCardNumber" class="form-control" placeholder="Credit Card Number" required title="16 Digit number" pattern="[0-9]{16}"/>
+                                        <input asp-for="CreditCardNumber" class="form-control" placeholder="Credit Card Number" required title="16 Digit number" pattern="[0-9]{16}" id="cd"/>
                                         <span asp-validation-for="CreditCardNumber" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input  class="form-control" placeholder="Confirm Credit Card Number" id="cde" onkeyup="check()" required  pattern="[0-9]{16}" type="password"/>
+                                        <span asp-validation-for="CreditCardNumber" class="text-danger"></span>
+                                        <span id="message"></span>
                                     </div>
 
                                 </div>
@@ -143,6 +149,16 @@
             else
                 var g = document.getElementById("priority").disabled
                     = true;
+        }
+
+        function check() {
+            if (document.getElementById("cd").value === document.getElementById("cde").value) {
+                document.getElementById("message").innerHTML = "Credit Card matching";
+
+            }
+            else {
+                document.getElementById("message").innerHTML = "Credit Card does not match";
+            }
         }
     </script>
 </body>

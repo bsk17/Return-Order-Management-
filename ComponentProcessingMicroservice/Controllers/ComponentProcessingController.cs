@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PaymentAPI.Database.Entities;
 using ComponentProcessingMicroservice.Database.Entities;
 using ComponentProcessingMicroservice.Services;
 
@@ -61,12 +60,12 @@ namespace ComponentProcessingMicroservice.Controllers
                     if (processRequest.IsPriority == true)
                     {
                         processResponse.ProcessingCharge = (_processCharges.CalculateProcessCharge() + 200) * processRequest.DefectiveComponent.Quantity;
-                        processResponse.DateOfDelivery = DateTime.Today.AddDays(2);
+                        processResponse.DateOfDelivery = DateTime.Today.AddDays(2).Date;
                     }
                     else
                     {
                         processResponse.ProcessingCharge = _processCharges.CalculateProcessCharge() * processRequest.DefectiveComponent.Quantity;
-                        processResponse.DateOfDelivery = DateTime.Today.AddDays(5);
+                        processResponse.DateOfDelivery = DateTime.Today.AddDays(5).Date;
                     }
                 }
                 // Processing Charge for Accessory item from ReplaceProcesscharge Class
@@ -74,7 +73,7 @@ namespace ComponentProcessingMicroservice.Controllers
                 {
                     _processCharges = new ReplaceProcessCharges();
                     processResponse.ProcessingCharge = _processCharges.CalculateProcessCharge() * processRequest.DefectiveComponent.Quantity;
-                    processResponse.DateOfDelivery = DateTime.Today.AddDays(5);
+                    processResponse.DateOfDelivery = DateTime.Today.AddDays(5).Date;
                 }
 
                 processResponse.ProcessRequestId = processRequest.ProcessRequestId;

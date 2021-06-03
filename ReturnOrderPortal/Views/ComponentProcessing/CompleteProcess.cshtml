@@ -51,9 +51,11 @@
                         @*@Html.DisplayNameFor(model => model.PackageAndDeliveryCharge)
                             @Html.DisplayFor(model => model.PackageAndDeliveryCharge)*@
                     </div>
+
+                    @{var date = Model.DateOfDelivery.Date; }
                     <div class="form-group mt-4">
                         <label class="white-text" for="DOD" style="color:black">Date Of Delivery</label>
-                        <input type="text" class="form-control" value="@Html.DisplayFor(model => model.DateOfDelivery)" disabled>
+                        <input type="text" class="form-control" value=@date disabled>
                         @*@Html.DisplayNameFor(model => model.DateOfDelivery)
                             @Html.DisplayFor(model => model.DateOfDelivery)*@
                     </div>

@@ -42,6 +42,7 @@ namespace ReturnOrderPortal
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
             services.AddHttpContextAccessor();
             services.AddSession();
         }

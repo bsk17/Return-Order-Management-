@@ -21,9 +21,5 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\PaymentAPI\PaymentAPI.csproj" />
-  </ItemGroup>
-
 
 </Project>

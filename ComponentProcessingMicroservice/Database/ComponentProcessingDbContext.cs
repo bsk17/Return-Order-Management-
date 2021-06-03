@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using ComponentProcessingMicroservice.Database.Entities;
 using Microsoft.EntityFrameworkCore;
-using PaymentAPI.Database.Entities;
 
 namespace ComponentProcessingMicroservice.Database
 {
