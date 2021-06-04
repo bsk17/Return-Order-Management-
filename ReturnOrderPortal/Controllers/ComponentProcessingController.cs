@@ -22,14 +22,14 @@ namespace ReturnOrderPortal.Controllers
             gatewayUrl = config.GetValue<string>("AppSettings:GatewayComponent");
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
         [HttpGet]
         public IActionResult CreateProcessRequest()
         {
+            var obj = SessionHelper.GetObject<UserRequest>(HttpContext.Session, "CurrentUser");
+            if (obj == null)
+            {
+                return RedirectToAction("Index","Authentication");
+            }
             return View();
         }
 
@@ -98,6 +98,11 @@ namespace ReturnOrderPortal.Controllers
       [HttpGet]
       public IActionResult CompleteProcess(ProcessResponse processResponse)
       {
+            var obj = SessionHelper.GetObject<UserRequest>(HttpContext.Session, "CurrentUser");
+            if (obj == null)
+            {
+                return RedirectToAction("Index", "Authentication");
+            }
             return View(processResponse);
       }
 

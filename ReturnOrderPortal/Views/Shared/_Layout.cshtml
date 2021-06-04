@@ -24,20 +24,22 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AboutUs">About us</a>
                         </li>
                         @{ var x = Context.Session.GetObject<UserRequest>("CurrentUser");}
-                        @if (x != null)
+                        @if (x == null)
                         {
 
+                            <li class="nav-item" style="margin-left:45em;">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Index">Login</a>
+                            </li>
+
+
+                        }
+                        else
+                        {
                             <li class="nav-item" style="margin-left:35em;">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="ComponentProcessing" asp-action="CreateProcessRequest">Replace/Return</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item" style="margin-left:45em;">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Index">Login</a>
                             </li>
                         }
                     </ul>
