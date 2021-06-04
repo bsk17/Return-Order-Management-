@@ -132,7 +132,7 @@ namespace ReturnOrderPortal.Controllers
                     }
                     else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
-                        ViewBag.Message = "400 Bad Request Error";
+                        ViewBag.Message = "Bad Request Error, Check your card details";
                         return View("CustomError");
                     }
                     else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
