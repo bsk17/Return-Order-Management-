@@ -67,7 +67,7 @@ namespace ReturnOrderPortal.Controllers
                     }
                     else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
-                        ViewBag.Message = "400 Credit Card Details Were Wrong";
+                        ViewBag.Message = "Credit Card Details Were Wrong  Or You Have Insuficient Balance";
                         return View("CustomError");
                     }
                     else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
