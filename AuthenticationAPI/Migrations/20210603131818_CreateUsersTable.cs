@@ -2,7 +2,7 @@
 
 namespace AuthenticationAPI.Migrations
 {
-    public partial class CreatingUserTable : Migration
+    public partial class CreateUsersTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

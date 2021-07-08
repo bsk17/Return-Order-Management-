@@ -53,9 +53,12 @@ namespace ReturnOrderPortal
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseStatusCodePagesWithRedirects("/Error");
             }
             else
             {
+                app.UseStatusCodePagesWithRedirects("/Error");
+
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
@@ -73,7 +76,7 @@ namespace ReturnOrderPortal
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Authentication}/{action=HomePage}/{id?}");
+                    pattern: "{controller=Authentication}/{action=Index}/{id?}");
             });
         }
     }

@@ -22,14 +22,14 @@ namespace ReturnOrderPortal.Controllers
             gatewayUrl = config.GetValue<string>("AppSettings:GatewayComponent");
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
         [HttpGet]
         public IActionResult CreateProcessRequest()
         {
+            var obj = SessionHelper.GetObject<UserRequest>(HttpContext.Session, "CurrentUser");
+            if (obj == null)
+            {
+                return RedirectToAction("Index","Authentication");
+            }
             return View();
         }
 
@@ -67,7 +67,7 @@ namespace ReturnOrderPortal.Controllers
                     }
                     else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
-                        ViewBag.Message = "400 Credit Card Details Were Wrong";
+                        ViewBag.Message = "Credit Card Details Were Wrong  Or You Have Insuficient Balance";
                         return View("CustomError");
                     }
                     else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -98,6 +98,11 @@ namespace ReturnOrderPortal.Controllers
       [HttpGet]
       public IActionResult CompleteProcess(ProcessResponse processResponse)
       {
+            var obj = SessionHelper.GetObject<UserRequest>(HttpContext.Session, "CurrentUser");
+            if (obj == null)
+            {
+                return RedirectToAction("Index", "Authentication");
+            }
             return View(processResponse);
       }
 
@@ -127,7 +132,7 @@ namespace ReturnOrderPortal.Controllers
                     }
                     else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
-                        ViewBag.Message = "400 Bad Request Error";
+                        ViewBag.Message = "Bad Request Error, Check your card details";
                         return View("CustomError");
                     }
                     else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)

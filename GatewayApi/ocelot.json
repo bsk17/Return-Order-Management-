@@ -1,3 +1,85 @@
+//{
+//  "Routes": [
+//    {
+//      "DownstreamPathTemplate": "/api/ComponentProcessing/ProcessDetails",
+//      "DownstreamScheme": "https",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "componentprocessingapi.azurewebsites.net",
+//          "Port": "443"
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/api/ComponentProcessing/ProcessDetails",
+//      "UpstreamHttpMethod": [ "POST" ],
+//      "Key": "Initiaterequest",
+//      "AuthenticationOptions": {
+//        "AuthenticationProviderKey": "TestKey",
+//        "AllowedScopes": []
+//      }
+//    },
+//    {
+//      "DownstreamPathTemplate": "/api/ComponentProcessing/CompleteProcessing/{RequestId}/{CreditCardNumber}/{ProcessingCharge}",
+//      "DownstreamScheme": "https",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "componentprocessingapi.azurewebsites.net",
+//          "Port": "443"
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/api/ComponentProcessing/CompleteProcessing/{RequestId}/{CreditCardNumber}/{ProcessingCharge}",
+//      "UpstreamHttpMethod": [ "POST" ],
+//      "Key": "CompletePayment",
+//      "AuthenticationOptions": {
+//        "AuthenticationProviderKey": "TestKey",
+//        "AllowedScopes": []
+//      }
+//    },
+//    {
+//      "DownstreamPathTemplate": "/api/PackagingAndDelivery/{ComponentType}/{Count}",
+//      "DownstreamScheme": "https",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "packaginganddeliveryapi.azurewebsites.net",
+//          "Port": "443"
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/api/PackagingAndDelivery/{ComponentType}/{Count}",
+//      "UpstreamHttpMethod": [ "GET" ],
+//      "Key": "PackageAndDelivery"
+//    },
+//    {
+//      "DownstreamPathTemplate": "/api/Payment/{CreditCardNumber}/{CreditcardLimit}/{ProcessingCharge}",
+//      "DownstreamScheme": "https",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "paymentprocessapi.azurewebsites.net",
+//          "Port": "443"
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/api/Payment/{CreditCardNumber}/{CreditcardLimit}/{ProcessingCharge}",
+//      "UpstreamHttpMethod": [ "GET" ],
+//      "Key": "Payment"
+//    },
+//    {
+//      "DownstreamPathTemplate": "/api/Authentication/Login",
+//      "DownstreamScheme": "https",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "authenticationprocessapi.azurewebsites.net",
+//          "Port": "443"
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/api/Authentication/Login",
+//      "UpstreamHttpMethod": [ "POST" ],
+//      "Key": "Authentication"
+//    }
+//  ],
+//  "GlobalConfiguration": {
+//    "BaseUrl": "https://returnmegatewayapi.azurewebsites.net"
+//  }
+//}
+
+
 {
   "Routes": [
     {

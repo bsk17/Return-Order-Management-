@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ComponentProcessingMicroservice.Migrations
 {
     [DbContext(typeof(ComponentProcessingDbContext))]
-    [Migration("20210523112426_CreateProcessRelatedTables")]
-    partial class CreateProcessRelatedTables
+    [Migration("20210603131511_CreatingAllTablesExceptUsers")]
+    partial class CreatingAllTablesExceptUsers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,30 @@ namespace ComponentProcessingMicroservice.Migrations
                 .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("ComponentProcessingMicroservice.Database.Entities.CreditCard", b =>
+                {
+                    b.Property<int>("CreditCardId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("CreditCardLimit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CreditCardNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("CreditCardId");
+
+                    b.ToTable("CreditCards");
+                });
 
             modelBuilder.Entity("ComponentProcessingMicroservice.Database.Entities.DefectiveComponent", b =>
                 {
@@ -99,30 +123,6 @@ namespace ComponentProcessingMicroservice.Migrations
                     b.HasIndex("ProcessRequestId");
 
                     b.ToTable("ProcessResponses");
-                });
-
-            modelBuilder.Entity("PaymentAPI.Database.Entities.CreditCard", b =>
-                {
-                    b.Property<int>("CreditCardId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("CreditCardLimit")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("CreditCardNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.HasKey("CreditCardId");
-
-                    b.ToTable("CreditCards");
                 });
 
             modelBuilder.Entity("ComponentProcessingMicroservice.Database.Entities.ProcessRequest", b =>

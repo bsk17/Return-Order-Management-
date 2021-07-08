@@ -20,6 +20,82 @@
     <link rel="stylesheet" href="~/assets/css/templatemo-sixteen.css">
     <link rel="stylesheet" href="~/assets/css/owl.css">
     <link rel="stylesheet" href="~/css/Cogratulations.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+
+        import url('https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900&display=swap');
+        html, body {
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .thankyou-page ._header {
+            background: #DC1C13;
+            padding: 100px 30px;
+            text-align: center;
+            background: #DC1C13 url(https://codexcourier.com/images/main_page.jpg) center/cover no-repeat;
+        }
+
+            .thankyou-page ._header .logo {
+                max-width: 200px;
+                margin: 0 auto 50px;
+            }
+
+                .thankyou-page ._header .logo img {
+                    width: 100%;
+                }
+
+            .thankyou-page ._header h1 {
+                font-size: 65px;
+                font-weight: 800;
+                color: white;
+                margin: 0;
+            }
+
+        .thankyou-page ._body {
+            margin: -70px 0 30px;
+        }
+
+            .thankyou-page ._body ._box {
+                margin: auto;
+                max-width: 80%;
+                padding: 50px;
+                background: white;
+                border-radius: 3px;
+                box-shadow: 0 0 35px rgba(10, 10, 10,0.12);
+                -moz-box-shadow: 0 0 35px rgba(10, 10, 10,0.12);
+                -webkit-box-shadow: 0 0 35px rgba(10, 10, 10,0.12);
+            }
+
+                .thankyou-page ._body ._box h2 {
+                    font-size: 32px;
+                    font-weight: 600;
+                    color: #DC1C13;
+                }
+
+        .thankyou-page ._footer {
+            text-align: center;
+            padding: 50px 30px;
+        }
+
+            .thankyou-page ._footer .btn {
+                background: #DC1C13;
+                color: white;
+                border: 0;
+                font-size: 14px;
+                font-weight: 600;
+                border-radius: 0;
+                letter-spacing: 0.8px;
+                padding: 20px 33px;
+                text-transform: uppercase;
+            }
+    </style>
+
+
+
+
 
 
 </head>
@@ -31,45 +107,28 @@
     <br />
     <br />
 
-    <div class="realoutercontainer">
-        <div class="outercontainer">
-            <div class="outercontainer2">
-                <div class="outercontainer3">
-                    <div class="outercontainer4">
-                        <h1>Congratulations!</h1>
-                        <p>
-                            YOUR ORDER HAS BEEN SUCCESSFULLY PLACED.
-                        </p>
+    <div class="thankyou-page">
+        <div class="_header">
+            <div class="logo">
+                <img src="https://codexcourier.com/images/banner-logo.png" alt="">
+            </div>
+            <h1>Congratulations!</h1>
+        </div>
+        <div class="_body">
+            <div class="_box">
+                <h2 style="text-align:center; color:black">
+                    <strong>YOUR ORDER</strong>  HAS BEEN SUCCESSFULLY PLACED.
+                </h2>
 
-                        <form asp-action="HomePage" asp-controller="Authentication">
-                            <input type="submit" value="OKAY" class="btn btn-success" />
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
-
-        <div class="common-rectangleGrid original">
-            <!-- Background -->
-            <div class="backgroundContainer">
-                <div class="grid">
-                    <div class="background"></div>
-                </div>
-            </div>
-            <!-- rectangles -->
-            <div class="rectangleContainer">
-                <div class="grid">
-                    <div class="rectangle"></div>
-                    <div class="rectangle"></div>
-                    <div class="rectangle"></div>
-                    <div class="rectangle"></div>
-                    <div class="rectangle"></div>
-                    <div class="rectangle"></div>
-                    <div class="rectangle"></div>
-                </div>
-            </div>
+        <div class="_footer">
+            <form asp-action="HomePage" asp-controller="Authentication">
+                <input type="submit" value="OKAY" class="btn" />
+            </form>
         </div>
     </div>
+
 
     <script src="~/vendor/jquery/jquery.min.js"></script>
     <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
